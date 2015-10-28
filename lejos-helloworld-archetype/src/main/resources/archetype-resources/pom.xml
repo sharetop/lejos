@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>${groupId}</groupId>
+  <artifactId>${artifactId}</artifactId>
+  <version>${version}</version>
+  <packaging>jar</packaging>
+
+  <name>${artifactId}</name>
+  <url>http://www.lejos.org</url>
+
+  <repositories>
+	<repository>
+		<id>OSChina Maven thirdparty</id>
+ 		<url>http://maven.oschina.net/content/repositories/thirdparty/</url>
+	</repository> 
+  </repositories>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <release-name>${artifactId}</release-name>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+  		<groupId>lejos.ev3</groupId>
+  		<artifactId>classes</artifactId>
+  		<version>0.9.0-beta</version>
+	</dependency>
+	<dependency>
+  		<groupId>lejos.ev3</groupId>
+  		<artifactId>dbusjava</artifactId>
+ 		 <version>0.9.0-beta</version>
+	</dependency>
+  </dependencies>
+  
+  <build>
+    <finalName>${release-name}</finalName>
+    <plugins>
+    <!-- MANIFEST.MF -->
+      <plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-jar-plugin</artifactId>
+		<configuration>
+			<archive>
+ 				<manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
+ 			</archive>
+ 		</configuration>
+	  </plugin>
+	  <!-- ev3scpupload -->
+      <plugin>
+        <groupId>cn.sharetop.maven</groupId>
+        <artifactId>lejos-maven-plugin</artifactId>
+        <version>0.0.1</version>
+        <executions>
+          <execution>
+            <id>scpupload</id>
+            <phase>deploy</phase>
+            <goals>
+              <goal>upload</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <commandTool>/leJOS_EV3_0.9.0-beta/bin/ev3scpupload</commandTool>
+          <deviceName>192.168.1.100</deviceName>
+          <targetPath>/home/lejos</targetPath>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  
+</project>
